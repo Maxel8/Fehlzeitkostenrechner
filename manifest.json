@@ -1,0 +1,16 @@
+{
+  "name": "Fehlzeitkosten-Rechner",
+  "short_name": "FZK-R",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ff0000",
+  "icons": [
+    {
+  "src": "icon.png",
+  "sizes": "1024x1024",
+  "type": "image/png"
+}
+
+  ]
+}
