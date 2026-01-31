@@ -3,32 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#ff0000">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="manifest" href="manifest.json">
     <title>Fehlzeiten-Rechner</title>
     <link rel="icon" href="icon.png" type="image/png">
+
+    <style> 
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #000;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 520px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .form {
+            width: 100%;
+            padding: 32px 24px;
+            background: #0c0c0c;
+            border-radius: 16px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.6);
+        }
+
+        .title {
+            text-align: center;
+            font-size: 1.6em;
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            text-align: center;
+            font-size: 1.1em;
+            margin-bottom: 6px;
+            color: #ccc;
+        }
+
+        input {
+            display: block;
+            margin: 0 auto 18px;
+            width: 85%;
+            max-width: 340px;
+            padding: 12px 16px;
+            font-size: 16px;
+            border-radius: 10px;
+            border: 1px solid #333;
+            background: #111;
+            color: #fff;
+        }
+
+        button {
+            display: block;
+            margin: 10px auto 0;
+            padding: 12px 28px;
+            font-size: 1.1em;
+            font-weight: 600;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
 </head>
-    <body>
+<body>
+
+    <div class="container">
         <h1 class="title">Fehlzeitkosten-Rechner</h1>
 
-        <label for="mitarbeiter">Anzahl an Mitarbeitenden</label>
-        <input id="mitarbeiter" type="number">
-<br>
-        <label for="hohe">Mitarbeiter mit hoher emotionaler Bindung (in %)</label>
-        <input id="hohe" type="number" min="1" max="100" value="10">
-<br>
-        <label for="geringe">Mitarbeiter mit geringer emotionaler Bindung (in %)</label>
-        <input id="geringe" type="number" min="1" max="100" value="77">
-<br>
-        <label for="keine">Mitarbeiter mit keiner emotionalen Bindung (in %)</label>
-        <input id="keine" type="number" min="1" max="100" value="13">
-<br>
-        <label for="kosten">Kosten pro Tag (in €)</label>
-        <input id="kosten" type="number">
-<br>
-        <button type="submit">Berechnen!</button>
-    </body>
+        <div class="form">
+            <label for="mitarbeiter">Anzahl an Mitarbeitenden</label>
+            <input id="mitarbeiter" type="number">
+
+            <label for="hohe">Mitarbeiter mit hoher emotionaler Bindung (in %)</label>
+            <input id="hohe" type="number" min="1" max="100" value="10">
+
+            <label for="geringe">Mitarbeiter mit geringer emotionaler Bindung (in %)</label>
+            <input id="geringe" type="number" min="1" max="100" value="77">
+
+            <label for="keine">Mitarbeiter mit keiner emotionalen Bindung (in %)</label>
+            <input id="keine" type="number" min="1" max="100" value="13">
+
+            <label for="kosten">Kosten pro Tag (in €)</label>
+            <input id="kosten" type="number">
+
+            <button>Berechnen!</button>
+        </div>
+    </div>
+
+</body>
 </html>
