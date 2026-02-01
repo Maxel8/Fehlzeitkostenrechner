@@ -1,1 +1,171 @@
-//
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ff0000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <title>Fehlzeiten-Rechner</title>
+    <link rel="icon" href="icon.png" type="image/png">
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #000;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 520px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .form {
+            width: 100%;
+            padding: 32px 24px;
+            background: #0c0c0c;
+            border-radius: 16px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.6);
+        }
+
+        .title {
+            text-align: center;
+            font-size: 1.6em;
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            text-align: center;
+            font-size: 1.1em;
+            margin-bottom: 6px;
+            color: #ccc;
+        }
+
+        input {
+            display: block;
+            margin: 0 auto 18px;
+            width: 85%;
+            max-width: 340px;
+            padding: 12px 16px;
+            font-size: 16px;
+            border-radius: 10px;
+            border: 1px solid #333;
+            background: #111;
+            color: #fff;
+        }
+
+        button {
+            display: block;
+            margin: 10px auto 0;
+            padding: 12px 28px;
+            font-size: 1.1em;
+            font-weight: 600;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="title">Fehlzeitkosten-Rechner</h1>
+
+    <div class="form">
+        <label for="mitarbeiter">Anzahl an Mitarbeitenden</label>
+        <input id="mitarbeiter" type="number">
+
+        <label for="hohe">Hohe emotionale Bindung (%)</label>
+        <input id="hohe" type="number" min="0" max="100" value="10">
+
+        <label for="geringe">Geringe emotionale Bindung (%)</label>
+        <input id="geringe" type="number" min="0" max="100" value="77">
+
+        <label for="keine">Keine emotionale Bindung (%)</label>
+        <input id="keine" type="number" min="0" max="100" value="13">
+
+        <label for="kosten">Kosten pro Tag (€)</label>
+        <input id="kosten" type="number">
+
+        <button onclick="berechnen()">Berechnen</button>
+
+        <br><br>
+
+        <p>Ergebnis:</p>
+
+        <ul>
+            <li>Hohe emotionale Bindung: <span id="hohe_zahl">-</span></li>
+            <li>Geringe emotionale Bindung: <span id="geringe_zahl">-</span> (+<span id="fehltage_geringe_sum">-</span> Fehltage)</li>
+            <li>Keine emotionale Bindung: <span id="keine_zahl">-</span> (+<span id="fehltage_keine_sum">-</span> Fehltage)</li>
+        </ul>
+
+        <ul>
+            <li>Gesamte Fehltage: <span id="fehltage_sum">-</span></li>
+            <li>Kosten je Fehltag: <span id="kosten_out">-</span> €</li>
+        </ul>
+
+        <ul>
+            <li>Gesamte Zusatzkosten: <span id="kosten_sum">-</span> €</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+function berechnen() {
+    const fehltage_geringe = 1.9;
+    const fehltage_keine = 4;
+
+    const mitarbeiter = Number(document.getElementById('mitarbeiter').value);
+    const hohe = Number(document.getElementById('hohe').value);
+    const geringe = Number(document.getElementById('geringe').value);
+    const keine = Number(document.getElementById('keine').value);
+    const kosten = Number(document.getElementById('kosten').value);
+
+    if (!mitarbeiter || !kosten) {
+        alert("Bitte alle Pflichtfelder korrekt ausfüllen.");
+        return;
+    }
+
+    if (hohe + geringe + keine !== 100) {
+        alert("Die Summe der Prozentwerte muss exakt 100 % ergeben.");
+        return;
+    }
+
+    const hohe_zahl = mitarbeiter * hohe / 100;
+    const geringe_zahl = mitarbeiter * geringe / 100;
+    const keine_zahl = mitarbeiter * keine / 100;
+
+    const fehltage_geringe_sum = fehltage_geringe * geringe_zahl;
+    const fehltage_keine_sum = fehltage_keine * keine_zahl;
+
+    const fehltage_sum = fehltage_geringe_sum + fehltage_keine_sum;
+    const kosten_sum = fehltage_sum * kosten;
+
+    document.getElementById("hohe_zahl").innerText = hohe_zahl.toFixed(2);
+    document.getElementById("geringe_zahl").innerText = geringe_zahl.toFixed(2);
+    document.getElementById("keine_zahl").innerText = keine_zahl.toFixed(2);
+
+    document.getElementById("fehltage_geringe_sum").innerText = fehltage_geringe_sum.toFixed(2);
+    document.getElementById("fehltage_keine_sum").innerText = fehltage_keine_sum.toFixed(2);
+
+    document.getElementById("fehltage_sum").innerText = fehltage_sum.toFixed(2);
+    document.getElementById("kosten_out").innerText = kosten.toFixed(2);
+    document.getElementById("kosten_sum").innerText = kosten_sum.toFixed(2);
+}
+</script>
+
+</body>
+</html>
