@@ -5,6 +5,7 @@ self.addEventListener("install", event => {
         "/",
         "/manifest.json",
         "/service-worker.js"
+        "/fehlzeitkosten.html"
       ]);
     })
   );
