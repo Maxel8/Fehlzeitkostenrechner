@@ -10,7 +10,7 @@
     <title>Fehlzeiten-Rechner</title>
     <link rel="icon" href="icon.png" type="image/png">
 
-    <style> 
+    <style>
         body {
             margin: 0;
             min-height: 100vh;
@@ -23,7 +23,7 @@
         }
 
         .container {
-            width: 100%;
+            width: 80%;
             max-width: 520px;
             display: flex;
             flex-direction: column;
@@ -81,28 +81,91 @@
 </head>
 <body>
 
-    <div class="container">
-        <h1 class="title">Fehlzeitkosten-Rechner</h1>
+<div class="container">
+    <h1 class="title">Fehlzeitkosten-Rechner</h1>
 
-        <div class="form">
-            <label for="mitarbeiter">Anzahl an Mitarbeitenden</label>
-            <input id="mitarbeiter" type="number">
+    <div class="form">
+        <label for="mitarbeiter">Anzahl an Mitarbeitenden</label>
+        <input id="mitarbeiter" type="number">
 
-            <label for="hohe">Mitarbeiter mit hoher emotionaler Bindung (in %)</label>
-            <input id="hohe" type="number" min="1" max="100" value="10">
+        <label for="hohe">Hohe emotionale Bindung (%)</label>
+        <input id="hohe" type="number" min="0" max="100" value="10">
 
-            <label for="geringe">Mitarbeiter mit geringer emotionaler Bindung (in %)</label>
-            <input id="geringe" type="number" min="1" max="100" value="77">
+        <label for="geringe">Geringe emotionale Bindung (%)</label>
+        <input id="geringe" type="number" min="0" max="100" value="77">
 
-            <label for="keine">Mitarbeiter mit keiner emotionalen Bindung (in %)</label>
-            <input id="keine" type="number" min="1" max="100" value="13">
+        <label for="keine">Keine emotionale Bindung (%)</label>
+        <input id="keine" type="number" min="0" max="100" value="13">
 
-            <label for="kosten">Kosten pro Tag (in €)</label>
-            <input id="kosten" type="number">
+        <label for="kosten">Kosten pro Tag (€)</label>
+        <input id="kosten" type="number">
 
-            <button>Berechnen!</button>
-        </div>
+        <button onclick="berechnen()">Berechnen</button>
+
+        <br><br>
+
+        <p>Ergebnis:</p>
+
+        <ul>
+            <li>Hohe emotionale Bindung: <span id="hohe_zahl">-</span></li>
+            <li>Geringe emotionale Bindung: <span id="geringe_zahl">-</span> (+<span id="fehltage_geringe_sum">-</span> Fehltage)</li>
+            <li>Keine emotionale Bindung: <span id="keine_zahl">-</span> (+<span id="fehltage_keine_sum">-</span> Fehltage)</li>
+        </ul>
+
+        <ul>
+            <li>Gesamte Fehltage: <span id="fehltage_sum">-</span></li>
+            <li>Kosten je Fehltag: <span id="kosten_out">-</span> €</li>
+        </ul>
+
+        <ul>
+            <li>Gesamte Zusatzkosten: <span id="kosten_sum">-</span> €</li>
+        </ul>
     </div>
+</div>
+
+<script>
+function berechnen() {
+    const fehltage_geringe = 1.9;
+    const fehltage_keine = 4;
+
+    const mitarbeiter = Number(document.getElementById('mitarbeiter').value);
+    const hohe = Number(document.getElementById('hohe').value);
+    const geringe = Number(document.getElementById('geringe').value);
+    const keine = Number(document.getElementById('keine').value);
+    const kosten = Number(document.getElementById('kosten').value);
+
+    if (!mitarbeiter || !kosten) {
+        alert("Bitte alle Pflichtfelder korrekt ausfüllen.");
+        return;
+    }
+
+    if (hohe + geringe + keine !== 100) {
+        alert("Die Summe der Prozentwerte muss exakt 100 % ergeben.");
+        return;
+    }
+
+    const hohe_zahl = mitarbeiter * hohe / 100;
+    const geringe_zahl = mitarbeiter * geringe / 100;
+    const keine_zahl = mitarbeiter * keine / 100;
+
+    const fehltage_geringe_sum = fehltage_geringe * geringe_zahl;
+    const fehltage_keine_sum = fehltage_keine * keine_zahl;
+
+    const fehltage_sum = fehltage_geringe_sum + fehltage_keine_sum;
+    const kosten_sum = fehltage_sum * kosten;
+
+    document.getElementById("hohe_zahl").innerText = hohe_zahl.toFixed(2);
+    document.getElementById("geringe_zahl").innerText = geringe_zahl.toFixed(2);
+    document.getElementById("keine_zahl").innerText = keine_zahl.toFixed(2);
+
+    document.getElementById("fehltage_geringe_sum").innerText = fehltage_geringe_sum.toFixed(2);
+    document.getElementById("fehltage_keine_sum").innerText = fehltage_keine_sum.toFixed(2);
+
+    document.getElementById("fehltage_sum").innerText = fehltage_sum.toFixed(2);
+    document.getElementById("kosten_out").innerText = kosten.toFixed(2);
+    document.getElementById("kosten_sum").innerText = kosten_sum.toFixed(2);
+}
+</script>
 
 </body>
 </html>
