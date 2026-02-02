@@ -1,6 +1,6 @@
 {
   "name": "Tool-Kit",
-  "short_name": "Tools",
+  "short_name": "Tool-Kit",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#ffffff",
