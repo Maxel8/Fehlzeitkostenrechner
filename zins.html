@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ff0000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <title>Tool-Kit (Zins-Rechner)</title>
+    <link rel="icon" href="icon.png" type="image/png">
+
+    <style>
+        body {
+            margin: 0;
+            padding-top: 70px; /* Platz für festen Header */
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #000;
+            color: #fff;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: linear-gradient(90deg, #150072, #0091a7);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            box-sizing: border-box;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .icon {
+            height: 50px;
+            width: 50px;
+            margin-right: 15px;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .icon:hover {
+            transform: rotate(15deg);
+        }
+
+        .heading {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, #ffc3c3);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 520px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        .form {
+            width: 100%;
+            padding: 32px 24px;
+            background: #0c0c0c;
+            border-radius: 16px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.6);
+        }
+
+        .title {
+            text-align: center;
+            font-size: 1.6em;
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            text-align: center;
+            font-size: 1.1em;
+            margin-bottom: 6px;
+            color: #ccc;
+        }
+
+        input {
+            display: block;
+            margin: 0 auto 18px;
+            width: 85%;
+            max-width: 340px;
+            padding: 12px 16px;
+            font-size: 16px;
+            border-radius: 10px;
+            border: 1px solid #333;
+            background: #111;
+            color: #fff;
+        }
+
+        button {
+            display: block;
+            margin: 10px auto 0;
+            padding: 12px 28px;
+            font-size: 1.1em;
+            font-weight: 600;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            color: #fff;
+            cursor: pointer;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" style="display: flex; align-items: center;">
+            <img class="icon" src="icon.png" alt="App-Icon">
+            <p class="heading">Tool-Kit</p>
+        </a>
+    </header>
+
+    <div class="container">
+        <h1 class="title">Zins-Rechner</h1>
+
+        <div class="form">
+            <label for="geld">Startguthaben (€)</label>
+            <input id="geld" type="number">
+
+            <label for="zinssatz">Zinssatz (%)</label>
+            <input id="zinssatz" type="number" min="0" max="100">
+
+            <label for="laufzeit">Laufzeit (Jahre)</label>
+            <input id="laufzeit" type="number">
+
+            <button onclick="berechnen()">Berechnen</button>
+
+            <br><br>
+
+            <p>Ergebnis:</p>
+
+            <ul>
+                <li>Kontostand: <span id="result">-</span></li>
+                <li>erhaltene Zinsen: <span id="zins_erhalten">-</span> €</li>
+            </ul>
+
+        </div>
+    </div>
+
+    <script>
+        function berechnen() {
+            const geld = Number(document.getElementById('geld').value);
+            const zinssatz = Number(document.getElementById('zinssatz').value);
+            const laufzeit = Number(document.getElementById('laufzeit').value);
+
+            if (!geld || !zinssatz || !laufzeit) {
+                alert("Bitte alle Pflichtfelder korrekt ausfüllen.");
+                return;
+            }
+
+            const result = geld * (1 + zinssatz / 100) ** laufzeit;
+            const zins_erhalten = result - geld;
+
+            document.getElementById("result").innerText = result.toFixed(2);
+            document.getElementById("zins_erhalten").innerText = zins_erhalten.toFixed(2);
+        }
+    </script>
+
+</body>
+</html>
