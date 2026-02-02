@@ -7,6 +7,7 @@ self.addEventListener("install", event => {
         "/service-worker.js"
         "/fehlzeitkosten.html"
         "/fluktation.html"
+        "/zins.html"
       ]);
     })
   );
