@@ -107,6 +107,11 @@
   color: #c6c2c2c3;     
   font-size: 14px;     
 }
+a.disabled {
+  pointer-events: none;
+  text-decoration: none;
+  cursor: default;
+}
 
         
     </style>
@@ -126,9 +131,11 @@
     <button><a href="fehlzeitkosten.html">Fehlzeitkosten-Rechner</a></button>
     <button><a href="fluktation.html">Fluktationskosten-Rechner</a></button>
     <button><a href="zins.html">Zinsrechner</a></button>
+    <button style="background: linear-gradient(135deg, #5b5e63, #464747);" disabled><a class="disabled" href="01.html">Percentage-Signifikanz-Test</a></button>
+    <button style="background: linear-gradient(135deg, #5b5e63, #464747);" disabled><a class="disabled" href="02.html">Mean-Signifikanz-Test</a></button>
 </div>
 <footer>
-  &copy; 2026 Maximilian. Alle Rechte vorbehalten.
+  © 2026 Tool-Kit • Entwickelt von Maximilian
 </footer>
 
 </body>
