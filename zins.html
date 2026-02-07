@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="manifest" href="manifest.json">
-    <title>Tool-Kit (Zinsrechner)</title>
+    <title>Tool-Kit (Anlagerechner (einmalig))</title>
     <link rel="icon" href="icon.png" type="image/png">
 
     <style>
@@ -144,7 +144,7 @@
             <label for="zinssatz">Zinssatz (%)</label>
             <input id="zinssatz" type="number" min="0" max="100">
 
-            <label for="laufzeit">Laufzeit (Jahre)</label>
+            <label for="laufzeit">Laufzeit (Monate)</label>
             <input id="laufzeit" type="number">
 
             <button onclick="berechnen()">Berechnen</button>
@@ -174,8 +174,8 @@
                 return;
             }
 
-            const result = geld * (1 + zinssatz / 100) ** laufzeit;
-            const zins_erhalten = result - geld;
+            const zins_erhalten = geld * (zinssatz / 100) * (laufzeit / 12);
+            const result = geld + zins_erhalten;
 
             document.getElementById("result").innerText = result.toFixed(2);
             document.getElementById("zins_erhalten").innerText = zins_erhalten.toFixed(2);
